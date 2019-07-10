@@ -3,20 +3,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t pavanyadala/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t pavan26devops/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true pavanyadala/react-test npm test
+  - docker run -e CI=true pavan26devops/react-test npm test
 
 after_success:
-  - docker build -t pavanyadala/multi-client ./client
-  - docker build -t pavanyadala/multi-nginx ./nginx
-  - docker build -t pavanyadala/multi-server ./server
-  - docker build -t pavanyadala/multi-worker ./worker
+  - docker build -t pavan26devops/multi-client ./client
+  - docker build -t pavan26devops/multi-nginx ./nginx
+  - docker build -t pavan26devops/multi-server ./server
+  - docker build -t pavan26devops/multi-worker ./worker
   # Login to docker CLI
   - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
   # push those images to docker hub
-  - docker push pavanyadala/multi-clinet
-  - docker push pavanyadala/multi-nginx
-  - docker push pavanyadala/multi-server
-  - docker push pavanyadala/multi-worker
+  - docker push pavan26devops/multi-client
+  - docker push pavan26devops/multi-nginx
+  - docker push pavan26devops/multi-server
+  - docker push pavan26devops/multi-worker
