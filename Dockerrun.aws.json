@@ -1,0 +1,36 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "image": "pavan26devops/multi-client",
+      "hostname": "client",
+      "essential": false
+    },
+    {
+      "name": "server",
+      "image": "pavan26devops/multi-server",
+      "hostname": "api",
+      "essential": false
+    },
+    {
+      "name": "worker",
+      "image": "pavan26devops/multi-worker",
+      "hostname": "worker",
+      "essential": false
+    },
+    {
+      "name": "nginx",
+      "image": "pavan26devops/multi-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"]
+    }
+  ]
+} 
