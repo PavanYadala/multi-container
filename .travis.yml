@@ -1,0 +1,22 @@
+sudo: required
+services: 
+  - docker
+
+before_install:
+  - docker build -t pavanyadala/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true pavanyadala/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t pavanyadala/multi-client ./client
+  - docker build -t pavanyadala/multi-nginx ./nginx
+  - docker build -t pavanyadala/multi-server ./server
+  - docker build -t pavanyadala/multi-worker ./worker
+  # Login to docker CLI
+  - echo "$DOCKER_PWD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push those images to docker hub
+  - docker push pavanyadala/multi-clinet
+  - docker push pavanyadala/multi-nginx
+  - docker push pavanyadala/multi-server
+  - docker push pavanyadala/multi-worker
